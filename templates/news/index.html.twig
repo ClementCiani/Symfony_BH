@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualité
+{% endblock %}
+
+{% block body %}
+	<h1>Actualité</h1>
+
+
+	{% for news in news %}
+
+		<div class="container">
+			<div class="row m-5">
+				<div class="col-md-12">
+					<h2>{{ news.title }}</h2>
+					<p>{{ news.content | raw }}</p>
+					<br>
+					<a href="{{ path('news_show', {'id': news.id}) }}" class="btn btn-lg btn-dark">Détail</a>
+				</div>
+			</div>
+		</div>
+		<hr>
+
+		{# <a href="{{ path('news_edit', {'id': news.id}) }}">edit</a> #}
+
+
+	{% else %}
+		<tr>
+			<td colspan="4">il n'y a aucun enregistrement</td>
+		</tr>
+	{% endfor %}
+
+{% endblock %}

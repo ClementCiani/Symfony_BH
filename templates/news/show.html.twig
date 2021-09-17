@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}News
+{% endblock %}
+
+{% block body %}
+	<h1>News</h1>
+
+	<table class="table">
+		<tbody>
+
+			<tr>
+				<h2>{{ news.title }}</h2>
+			</tr>
+			<tr>
+				<td>{{ news.content | raw }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('news_index') }}">Retour a la liste d'articles</a>
+	<br>
+	<a href="{{ path('news_edit', {'id': news.id}) }}" class="btn btn-lg btn-warning">Modifier</a>
+
+	{{ include('news/_delete_form.html.twig') }}
+{% endblock %}
