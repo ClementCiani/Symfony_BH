@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Product;
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -31,7 +32,7 @@ class ProductType extends AbstractType
                     'placeholder' => 'Prix du produit en euros'
                 ]
             ])
-            ->add('imageUrl', FileType::class, [
+            ->add('imageUrl', TextType::class, [
                 'label' => 'Image',
                 'mapped' => false
             ]);

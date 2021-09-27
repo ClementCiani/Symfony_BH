@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class ChangePasswordType extends AbstractType
 {
@@ -20,32 +21,19 @@ class ChangePasswordType extends AbstractType
     {
         $builder
 
-            ->add('firstName', TextType::class, [
-                'disabled' => true,
-                'label' => 'Prénom'
+            ->add('oldPassword', PasswordType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Ancien mot de passe',
+                'constraints' => [
+                    new UserPassword([
+                        'message' => 'Votre ancien mot de passe est incorrect.',
+                    ]),
+                ],
             ])
 
-            ->add('lastName', TextType::class, [
-                'disabled' => true,
-                'label' => 'Nom'
-            ])
 
-            ->add('phone', TelType::class, [
-                'disabled' => true,
-                'label' => 'Téléphone'
-            ])
-
-            ->add('email', EmailType::class, [
-                'disabled' => true,
-                'label' => 'Email'
-            ])
-
-            ->add('password', PasswordType::class, [
-                'label' => 'Mot de passe',
-                'attr' => ['placeholder' => 'Entrer votre mot de passe actuel']
-            ])
-
-            ->add('PlainPassword', RepeatedType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type' => PasswordType::class,
@@ -72,7 +60,7 @@ class ChangePasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+           
         ]);
     }
 }

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon panier
+{% endblock %}
+
+{% block body %}
+	<h1>Mon panier</h1>
+	Voici l'ensemble des produits ajouter a votre panier
+	<hr>
+	{% if cart | length > 0 %}
+		<table class="mt-2 table table-hover table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Produit</th>
+					<th scope="col"></th>
+					<th scope="col">Quantité</th>
+					<th scope="col">Prix</th>
+					<th scope="col">Total</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set total = null %}
+				{% for product in cart  %}
+					<tr>
+
+						<th><img src="/uploads/products/{{ product.product.imageUrl}}" alt="{{ product.product.name }}" height="75px" srcset=""></th>
+						<td>{{ product.product.name }}</td>
+						<td>
+							<a href="{{ path('decrease_to_cart', { 'id' : product.product.id } ) }}" class="btn btn-dark">-</a>
+							<button class="btn btn-white">{{ product.quantity }}</button>
+							<a href="{{ path('add_to_cart', {id : product.product.id })}}" class="btn btn-dark">+</a>
+						</td>
+						<td>{{ product.product.price | amount }}</td>
+						<td>{{ (product.product.price * product.quantity) | amount  }}</td>
+						<td>
+							<a href="{{ path('delete_to_cart', { 'id' : product.product.id } ) }}">
+								<img src="{{ asset('uploads/images/delete.png') }}" height="20px" alt="supprimer mon produit">
+							</a>
+						</td>
+					</tr>
+					{% set total = total + (product.product.price * product.quantity) %}
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="text-end">
+			<b>Nombre de produit :</b>
+			{{ cart | length }}
+			<br>
+			<b>Total de mon panier :</b>
+			{{ total | amount }}<br>
+			<div class="d-grid gap-2 mt-3">
+				<a href="{{ path('order') }}" class="btn btn-dark">Valider mon panier</a>
+			</div>
+
+		</div>
+	{% else %}
+		<div class="p-custom-cart">
+			<p>Votre panier est vide</p>
+		</div>
+
+	{% endif %}
+
+{% endblock %}

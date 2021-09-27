@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande
+{% endblock %}
+
+{% block body %}
+	<h2>je passe ma commande</h2>
+	<p>Choisissez vos préférences avant de passer votre commande sur Banlieu's Heart.</p>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+
+			{% set formHtml %}
+			{{form_start(orderForm)}}
+			{{form_widget(orderForm)}}
+			{{form_end(orderForm)}}
+			{% endset %}
+			{{ formHtml | replace ({'[br]' : ' <br/> '}) | raw }}
+			<br>
+			<b>Choisir mon transporteur
+			</b>
+		</div>
+		<div class="col-md-6">
+			<b>Recapitulatif de ma commande</b>
+			<br>
+			<b>Boutton pour payer</b>
+		</div>
+	</div>
+{% endblock %}

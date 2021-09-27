@@ -1,9 +1,25 @@
 .footer-custom{
-    position: fixed;
-    bottom: 0;
+    position: absolute;
     width: 100%;
+    padding-top: 25px;
 }
 
-a{
-    text-decoration: none;
+body {
+    position: relative;
+}
+
+.dropdown-menu .dropdown-menu-dark{
+
+    text-align: end;
+}
+
+.cart-icon{
+
+    height: 20px;
+}
+
+/* page de login */
+.block-small{
+    max-width: 600px;
+    margin: 0 auto;
 }
