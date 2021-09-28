@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement commande
+{% endblock %}
+
+{% block body %}
+	<h2>Récapitulatif</h2>
+	<p>Vérifiez vos information avant de validez votre commande.</p>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<p>Adresse de livraison</p>
+			<div class="form-check mt-3">
+				{{ delivery | raw }}
+			</div>
+			<hr>
+			<p>Transporteur</p>
+			<div class="form-check">
+				{{ carrier.name }}
+				<br>
+				{{ carrier.description }}
+				<br>
+				{{ carrier.price | amount }}
+				€
+			</div>
+		</div>
+		<div class="col-md-6">
+
+			<div class="text-center">
+				<b>Ma commande</b>
+			</div>
+			{% set total = null %}
+			{% for key, product in cart  %}
+				<div class="row {% if key > 0 %} mt-2{% endif %} ">
+					<table class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th scope="col-2">Produit</th>
+								<th scope="col-6"></th>
+								<th scope="col-2">Quantité</th>
+								<th scope="col-2">Prix</th>
+							</tr>
+						</thead>
+
+						<td>
+							<img src="/uploads/products/{{ product.product.imageUrl}}" alt="{{ product.product.name }}" height="75px" srcset="">
+						</td>
+
+						<td>
+							{{ product.product.name }}
+						</td>
+
+						<td>
+							X
+							{{ product.quantity }}
+						</td>
+						<td>{{ (product.product.price * product.quantity) | amount  }}</td>
+					</table>
+				</div>
+				{% set total = total + (product.product.price * product.quantity) %}
+			{% endfor %}
+			<br>
+			<strong>Sous-total :
+			</strong>
+			{{ total | amount }}
+			<br>
+			<strong>Livraison :
+			</strong>
+			{{ carrier.price | amount}}
+			€
+			<hr>
+			<strong>Total :
+			</strong>
+			{{(total + carrier.price) | amount}}
+			<br>
+			<form action="{{ path('stripe_checkout') }}" method="POST">
+				<button type="submit" id="checkout-button">Checkout</button>
+			</form>
+			{# <a class="btn btn-lg btn-dark mt-3">Payer
+										{{(total + carrier.price) | amount}}</a> #}
+		</div>
+	</div>
+{% endblock %}

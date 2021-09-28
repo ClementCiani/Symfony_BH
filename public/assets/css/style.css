@@ -23,3 +23,16 @@ body {
     max-width: 600px;
     margin: 0 auto;
 }
+/* ----------------------------------------- tunnel d'achat -------------------------------------------------*/
+
+/* les checkbox dans le tunnel d'achat */
+.form-check{
+    background-color: whitesmoke;
+    padding: 20px 65px;
+    margin-top: 7px;
+}
+
+/* les titres des checkbox du tunnel d'achat */
+.col-form-label{
+    font-weight: bold;
+}

@@ -11,19 +11,54 @@
 		<div class="col-md-6">
 
 			{% set formHtml %}
-			{{form_start(orderForm)}}
+			{{form_start(orderForm, {action:path('order_recap')}) }}
+			{{form_label(orderForm.adresses, 'Choissiser votre adresse de livraison')}}
+			<a href="{{ path('add_account_adress')}}">
+				Ajouter une nouvelle adresse</a>
 			{{form_widget(orderForm)}}
-			{{form_end(orderForm)}}
 			{% endset %}
 			{{ formHtml | replace ({'[br]' : ' <br/> '}) | raw }}
 			<br>
-			<b>Choisir mon transporteur
-			</b>
 		</div>
 		<div class="col-md-6">
-			<b>Recapitulatif de ma commande</b>
+
+
+			{% for key,product in cart  %}
+				<div class="row {% if key > 0 %} mt-2{% endif %} ">
+					<div class="text-center">
+						<b>Recapitulatif de ma commande</b>
+					</div>
+
+					<table class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th scope="col-2">Produit</th>
+								<th scope="col-6"></th>
+								<th scope="col-2">Quantité</th>
+								<th scope="col-2">Prix</th>
+							</tr>
+						</thead>
+
+						<td>
+							<img src="/uploads/products/{{ product.product.imageUrl}}" alt="{{ product.product.name }}" height="75px" srcset="">
+						</td>
+
+						<td>
+							{{ product.product.name }}
+						</td>
+
+						<td>
+							X
+							{{ product.quantity }}
+						</td>
+						<td>{{ (product.product.price * product.quantity) | amount  }}</td>
+					</table>
+				</div>
+			{% endfor %}
 			<br>
-			<b>Boutton pour payer</b>
+
+			<button type="submit" class="btn btn-lg btn-dark">Valider</button>
+			{{form_end(orderForm)}}
 		</div>
 	</div>
 {% endblock %}
