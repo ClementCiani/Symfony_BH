@@ -21,7 +21,8 @@
 							<h5>{{ product.name }}</h5>
 							<span>{{ product.subtitle }}</span>
 							<br>
-							{{ product.price | amount }}
+							{{ (product.price / 100) |number_format(2, ',', '.' ) }}
+							€
 						</div>
 					</div>
 				{% endfor %}

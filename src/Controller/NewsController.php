@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Form\NewsType;
 use App\Repository\NewsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +15,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/news')]
 class NewsController extends AbstractController
 {
+
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/', name: 'news_index', methods: ['GET'])]
     public function index(NewsRepository $newsRepository): Response
     {
@@ -46,9 +55,15 @@ class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'news_show', methods: ['GET'])]
-    public function show(News $news): Response
+    #[Route('/{slug}', name: 'news_show', methods: ['GET'])]
+    public function show($slug): Response
     {
+        $news = $this->entityManager->getRepository(News::class)->findOneBySlug($slug);
+
+        if (!$news) {
+            return $this->redirectToRoute('news_index');
+        }
+
         return $this->render('news/show.html.twig', [
             'news' => $news,
         ]);
@@ -75,7 +90,7 @@ class NewsController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}', name: 'news_delete', methods: ['POST'])]
+    #[Route('/admin/delete/{id}', name: 'news_delete', methods: ['POST'])]
     /**
      * @IsGranted("ROLE_ADMIN")
      */

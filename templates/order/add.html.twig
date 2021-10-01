@@ -20,7 +20,7 @@
 				<br>
 				{{ carrier.description }}
 				<br>
-				{{ carrier.price | amount }}
+				{{ (carrier.price ) |number_format(2, ',', '.' ) }}
 				€
 			</div>
 		</div>
@@ -29,55 +29,53 @@
 			<div class="text-center">
 				<b>Ma commande</b>
 			</div>
-			{% set total = null %}
-			{% for key, product in cart  %}
-				<div class="row {% if key > 0 %} mt-2{% endif %} ">
-					<table class="table table-hover table-striped">
-						<thead>
-							<tr>
-								<th scope="col-2">Produit</th>
-								<th scope="col-6"></th>
-								<th scope="col-2">Quantité</th>
-								<th scope="col-2">Prix</th>
-							</tr>
-						</thead>
+			<div class="order-summary">
+				{% set total = null %}
+				{% for key, product in cart  %}
+					<div class="row {% if key > 0 %} mt-2{% endif %} ">
+						<div class="col-2">
 
-						<td>
 							<img src="/uploads/products/{{ product.product.imageUrl}}" alt="{{ product.product.name }}" height="75px" srcset="">
-						</td>
 
-						<td>
+						</div>
+						<div class="col-8 my-auto">
+
 							{{ product.product.name }}
-						</td>
 
-						<td>
+
+							<br>
 							X
 							{{ product.quantity }}
-						</td>
-						<td>{{ (product.product.price * product.quantity) | amount  }}</td>
-					</table>
-				</div>
-				{% set total = total + (product.product.price * product.quantity) %}
-			{% endfor %}
+
+						</div>
+						<div class="col-2 my-auto">
+							{{ ((product.product.price * product.quantity) / 100) |number_format(2, ',', '.') }}
+							€
+						</div>
+					</div>
+					<hr>
+					{% set total = total + (product.product.price * product.quantity) %}
+				{% endfor %}
+			</div>
 			<br>
 			<strong>Sous-total :
 			</strong>
-			{{ total | amount }}
+			{{ (total / 100) |number_format(2, ',', '.' )}}
 			<br>
 			<strong>Livraison :
 			</strong>
-			{{ carrier.price | amount}}
+			{{ (carrier.price ) |number_format(2, ',', '.' ) }}
 			€
 			<hr>
 			<strong>Total :
 			</strong>
-			{{(total + carrier.price) | amount}}
+			{{((total / 100 ) + carrier.price) |number_format(2, ',', '.' )}}
 			<br>
 			<form action="{{ path('stripe_checkout') }}" method="POST">
-				<button type="submit" id="checkout-button">Checkout</button>
+				<button type="submit" id="checkout-button" class="btn btn-lg btn-dark">Payer</button>
 			</form>
 			{# <a class="btn btn-lg btn-dark mt-3">Payer
-										{{(total + carrier.price) | amount}}</a> #}
+																																																																																																	{{(total + carrier.price) | amount}}</a> #}
 		</div>
 	</div>
 {% endblock %}

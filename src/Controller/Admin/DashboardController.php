@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Carrier;
 use App\Entity\Category;
+use App\Entity\News;
 use App\Entity\Order;
 use App\Entity\Product;
 use App\Entity\User;
@@ -26,7 +27,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Banlieu\'s Heart');
+            ->setTitle('Banlieue\'s Heart');
     }
 
     public function configureMenuItems(): iterable
@@ -37,5 +38,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Categories', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Produits', 'fas fa-tag', Product::class);
         yield MenuItem::linkToCrud('Transporteurs', 'fas fa-truck', Carrier::class);
+        yield MenuItem::linkToCrud('Actualitées', 'fas fa-newspaper', News::class);
     }
 }

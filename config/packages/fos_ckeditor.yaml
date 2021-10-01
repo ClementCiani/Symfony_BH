@@ -4,14 +4,11 @@ twig:
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 fos_ck_editor:
+    input_sync: true
+    default_config: base_config
     configs:
-        main_config:
-            toolbar:
-                - { name: "styles", items: ['Bold', 'Italic', 'Underline',
-                 'Strike', 'Blockquote', '-', 'Link', '-', 'RemoveFormat',
-                  '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent',
-                   '-', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight',
-                    'JustifyBlock', '-', 'Image', 'Table', '-', 'Styles', 'Format',
-                    'Font','FontSize', '-', 'TextColor', 'BGColor', 'Source'] }
-            filebrowserBrowseRoute: elfinder 
-            filebrowserBrowseRouteParameters: []   
+        base_config:
+            toolbar: full
+                # - { name: "styles", items: ['Bold', 'Italic', 'Underline', 'Strike', 'Blockquote', '-', 'Link', '-', 'RemoveFormat', '-', 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'Image', 'Table', '-', 'Styles', 'Format','Font','FontSize', '-', 'TextColor', 'BGColor', 'Source'] }
+            filebrowserBrowseRoute : elfinder
+            filebrowserBrowseRouteParameters : []
