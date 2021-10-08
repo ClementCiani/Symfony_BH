@@ -68,7 +68,10 @@ class OrderController extends AbstractController
             $deliveryContent .= '<br>' . $delivery->getPostal() . ' ' . $delivery->getCity();
             $deliveryContent .= '<br>' . $delivery->getCountry();
 
+            // enregistrement de ma commande order
             $order = new Order();
+            $reference = $date->format('dmY') . '-' . uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setOrderDate($date);
             $order->setCarrierName($carriers->getName());
@@ -79,7 +82,7 @@ class OrderController extends AbstractController
             $this->entityManager->persist($order);
 
 
-
+            // enregistrement de mes produits dans orderDetails
             foreach ($cart->getFull() as $product) {
                 $orderDetails = new OrderDetails();
                 $orderDetails->setMyOrder($order);
@@ -90,13 +93,14 @@ class OrderController extends AbstractController
                 $this->entityManager->persist($orderDetails);
             }
 
-            // $this->entityManager->flush();
+            $this->entityManager->flush();
 
 
             return $this->render('order/add.html.twig', [
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
-                'delivery' => $deliveryContent
+                'delivery' => $deliveryContent,
+                'reference' => $order->getReference()
             ]);
         }
 

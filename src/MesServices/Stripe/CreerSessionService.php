@@ -4,6 +4,8 @@ namespace App\MesServices\Stripe;
 
 use Stripe\Stripe;
 use App\Classe\Cart;
+use App\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session;
 use Symfony\Component\Security\Core\Security;
 
@@ -15,11 +17,14 @@ class CreerSessionService
 
     protected $security;
 
-    public function __construct($keySecret, Cart $cart, Security $security)
+    protected $entityManager;
+
+    public function __construct($keySecret, EntityManagerInterface $entityManager, Cart $cart, Security $security)
     {
         $this->keySecret = $keySecret;
         $this->cart = $cart;
         $this->security = $security;
+        $this->entityManager = $entityManager;
     }
 
     public function getDomain()
@@ -27,14 +32,14 @@ class CreerSessionService
         return 'https://localhost:8000';
     }
 
-    public function getItems()
+    public function getItems($order)
     {
-        $produits_stripe = [];
+        $products_stripe = [];
 
         $products = $this->cart->getFull();
 
         foreach ($products as $item) {
-            $produits_stripe[] = [
+            $products_stripe[] = [
                 'price_data' => [
                     'currency' => 'eur',
                     'unit_amount' => $item['product']->getPrice(),
@@ -46,17 +51,32 @@ class CreerSessionService
             ];
         }
 
-        return $produits_stripe;
+        $products_stripe[] = [
+            'price_data' => [
+                'currency' => 'eur',
+                'unit_amount' => ($order->getCarrierPrice() * 100),
+                'product_data' => [
+                    'name' => $order->getCarrierName()
+                ]
+            ],
+            'quantity' => 1,
+        ];
+
+        return $products_stripe;
     }
 
-    public function create()
+
+
+
+
+    public function create($order)
     {
         Stripe::setApiKey($this->keySecret);
 
         return Session::create([
             'customer_email' => $this->security->getUser()->getEmail(),
             'line_items' => [
-                $this->getItems()
+                $this->getItems($order)
             ],
             'payment_method_types' => [
                 'card',

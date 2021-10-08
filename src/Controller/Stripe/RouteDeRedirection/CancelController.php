@@ -13,6 +13,6 @@ class CancelController extends AbstractController
     public function cancel()
     {
         // dd("ca a pas marché. Tu as pas d'argent.");
-        return $this->redirectToRoute('cancel');
+        return $this->redirectToRoute('order');
     }
 }
