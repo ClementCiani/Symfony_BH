@@ -4,7 +4,6 @@ namespace App\MesServices\Stripe;
 
 use Stripe\Stripe;
 use App\Classe\Cart;
-use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Checkout\Session;
 use Symfony\Component\Security\Core\Security;
@@ -65,15 +64,11 @@ class CreerSessionService
         return $products_stripe;
     }
 
-
-
-
-
     public function create($order)
     {
         Stripe::setApiKey($this->keySecret);
 
-        return Session::create([
+        $checkout_session = Session::create([
             'customer_email' => $this->security->getUser()->getEmail(),
             'line_items' => [
                 $this->getItems($order)
@@ -82,8 +77,11 @@ class CreerSessionService
                 'card',
             ],
             'mode' => 'payment',
-            'success_url' => $this->getDomain() . '/success',
-            'cancel_url' => $this->getDomain() . '/cancel',
+            'success_url' => $this->getDomain() . '/success/{CHECKOUT_SESSION_ID}',
+            'cancel_url' => $this->getDomain() . '/cancel/{CHECKOUT_SESSION_ID}',
         ]);
+        $order->setStripeSessionId($checkout_session->id);
+        $this->entityManager->flush();
+        return $checkout_session;
     }
 }

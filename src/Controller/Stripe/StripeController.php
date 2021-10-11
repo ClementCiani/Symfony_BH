@@ -21,9 +21,8 @@ class StripeController extends AbstractController
         if (!$order) {
             $this->redirectToRoute('order');
         }
+        $stripeSessionId = $creerSessionService->create($order);
 
-        $sessionStripe = $creerSessionService->create($order);
-
-        return $this->redirect($sessionStripe->url);
+        return $this->redirect($stripeSessionId->url);
     }
 }
