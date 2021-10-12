@@ -5,7 +5,10 @@
 
 {% block body %}
 	<h1>Créer un compte</h1>
-
+	{% if notification %}
+		<div class="alert alert-info">{{ notification }}</div>
+		<hr>
+	{% endif %}
 	{{ form_start(registrationForm) }}
 	{{ form_widget(registrationForm) }}
 	<button type="submit" class="btn btn-lg btn-dark">Enregistrer</button>

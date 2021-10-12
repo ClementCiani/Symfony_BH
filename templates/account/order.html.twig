@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes
+{% endblock %}
+
+{% block body %}
+	<h1>Mes commandes</h1>
+	<p>
+		C'est ici que vous allez pouvoir gerer toutes vos commandes
+	</p>
+	<a href="{{ path('account') }}">Retour au compte</a>
+	<hr>
+	{% if orders | length == 0 %}
+		<p>
+			Vous n'avez pas encore passé de commande dans notre boutique
+		</p>
+
+	{% else %}
+
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Référence</th>
+					<th scope="col">Passé le</th>
+					<th scope="col">Produit(s)</th>
+					<th scope="col">Total</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in orders %}
+					<tr>
+						<td>{{ order.reference }}</td>
+						<td>{{ order.orderDate | date('d/m/Y') }}</td>
+						<td>{{ order.orderDetails | length }}
+						</td>
+						<td>
+							{{ ((order.carrierPrice + order.getTotal) / 100) | number_format(2, ',', '.') }}
+							€
+						</td>
+						<td class="text-right">
+							<a href="{{ path('account_order_show', {'reference' : order.reference }) }}">Voir ma commande</Sa>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	{% endif %}
+{% endblock %}
