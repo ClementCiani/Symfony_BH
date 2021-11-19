@@ -3,14 +3,27 @@
 {% block title %}Créer un compte
 {% endblock %}
 
-{% block body %}
+{% block content %}
 	<h1>Créer un compte</h1>
 	{% if notification %}
 		<div class="alert alert-info">{{ notification }}</div>
 		<hr>
 	{% endif %}
 	{{ form_start(registrationForm) }}
-	{{ form_widget(registrationForm) }}
-	<button type="submit" class="btn btn-lg btn-dark">Enregistrer</button>
+	<div class="row">
+		<div class="col-md-6">{{ form_row(registrationForm.firstName) }}</div>
+		<div class="col-md-6">{{ form_row(registrationForm.lastName) }}</div>
+		<div class="col-md-12">{{ form_row(registrationForm.phone) }}</div>
+		<div class="col-md-12">{{ form_row(registrationForm.email) }}</div>
+		<div class="col-md-12">{{ form_row(registrationForm.plainPassword) }}</div>
+		<p>
+			êtes vous d'accord avec nos
+			<a href="{{path('cgu')}}">conditions générales d'utilisation</a>
+			?
+		</p>
+		<div class="col-md-12">{{ form_row(registrationForm.agreeTerms) }}</div>
+		{# {{ form_widget(registrationForm) }} #}
+		<button type="submit" class="btn btn-lg btn-dark">Enregistrer</button>
+	</div>
 	{{ form_end(registrationForm) }}
 {% endblock %}

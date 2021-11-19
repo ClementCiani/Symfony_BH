@@ -2,16 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Carrier;
-use App\Entity\Category;
 use App\Entity\News;
-use App\Entity\Order;
-use App\Entity\Product;
 use App\Entity\User;
+use App\Entity\Order;
+use App\Entity\Header;
+use App\Entity\Carrier;
+use App\Entity\Product;
+use App\Entity\Category;
+use App\Controller\Admin\NewsCrudController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
@@ -21,7 +24,9 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+
+        return $this->redirect($routeBuilder->setController(NewsCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -39,5 +44,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Produits', 'fas fa-tag', Product::class);
         yield MenuItem::linkToCrud('Transporteurs', 'fas fa-truck', Carrier::class);
         yield MenuItem::linkToCrud('Actualitées', 'fas fa-newspaper', News::class);
+        yield MenuItem::linkToCrud('Carousel', 'fas fa-desktop', Header::class);
+        yield MenuItem::linkToRoute('Retour', 'fas fa-undo-alt', 'home');
     }
 }

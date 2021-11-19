@@ -3,36 +3,39 @@
 {% block title %}Actualité
 {% endblock %}
 
-{% block body %}
-	<div class="col-md-12">
-		<h1>Actualité</h1>
-		<div class="row">
-			{% for news in news %}
-				<div class="col-md-4">
-					<div class="card" style="width: 18rem;">
-						<img src="/uploads/news/{{ news.image}}" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">{{ news.title }}</h5>
-							<p class="card-text">{{ news.subtitle | raw }}</p>
-						</div>
+{% block content %}
+	<div class="col-md-10">
+		<h3>Actualité</h3>
 
-						<small class="text-center">
-							Créé le :
-							{{ news.createdAt | date('d-m-Y') }}
-						</small>
-						<div class="card-footer">
-							<a href="{{ path('news_show', { 'slug' : news.slug }) }}" class="btn btn-lg btn-dark">Détail</a>
-						</div>
-					</div>
+		{% for news in news %}
+			<div class="news-custom row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+				<div class="col-auto d-none d-lg-block">
+					<img src="/uploads/news/{{ news.image}}" class="news-image-custom" width="200" height="250" preserveaspectratio="xMidYMid slice">
 				</div>
-			{% else %}
-				<tr>
-					<td colspan="4">il n'y a aucun enregistrement</td>
-				</tr>
+				<div class="col p-4 d-flex flex-column position-static">
+					<div class="mb-1 text-muted">
+						<small>Créé le :
+							{{ news.createdAt | date(('d/m/Y')) }}
+							a
+							{{ news.createdAt | date(('H:m')) }}</small>
+					</div>
+					<br><br>
+					<a href="{{ path('news_show', { 'slug' : news.slug }) }}" class="stretched-link">
+						<h3 class="mb-0">{{ news.title }}</h3>
+					</a>
+					<br>
+					<p class="card-text mb-auto">{{ news.subtitle | raw }}.</p>
 
-			{% endfor %}
+				</div>
+			</div>
+		{% else %}
+			<tr>
+				<td colspan="4">il n'y a aucune actu !</td>
+			</tr>
 
-		</div>
+		{% endfor %}
+
+
 	</div>
 {% endblock %}
 

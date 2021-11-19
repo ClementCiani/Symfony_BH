@@ -3,12 +3,16 @@
 {% block title  %}Accès interdit
 {% endblock %}
 
-{% block body %}
-	<h1>Accès interdit</h1>
-	<p>La page sue vous cherhez n'a pas été trouvée.</p>
-	<p>Code de l'erreur :
-		{{ status_code }}</p>
-	<p>Message de l'erreur :
-		{{ status_text }}
-	</p>
+{% block content %}
+	<div class="forbiden-custom">
+		<h1>Accès interdit</h1>
+		<p>La page que vous cherchez n'a pas été trouvée.</p>
+		<p>Code de l'erreur :
+			{{ status_code }}</p>
+		<p>Message de l'erreur :
+			{{ status_text }}
+		</p>
+		<br>
+		<a href="{{ path('home') }}">Revenir à l'accueil</a>
+	</div>
 {% endblock %}

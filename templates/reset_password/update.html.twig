@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié
+{% endblock %}
+
+{% block content %}
+	<div class="block-small">
+		<h1 class="h3 mb-3 font-weight-normal">Réinitialiser le mot de passe</h1>
+		{% for message in app.flashes('notice') %}
+			<div class="alert alert-danger">{{ message }}</div>
+		{% endfor %}
+		{% for message in app.flashes('notice') %}
+			<div class="alert alert-danger">{{ message }}</div>
+		{% endfor %}
+		{{form_start(updateForm)}}
+
+		{{form_widget(updateForm) }}
+		<button type="submit" class="btn btn-lg btn-dark">Mise à jour</button>
+		{{form_end(updateForm)}}
+	</div>
+{% endblock %}

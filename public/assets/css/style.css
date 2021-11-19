@@ -1,21 +1,32 @@
-.navbar{
-    height: 120px;
+.container{
+    margin-top: 100px;
 }
 
+.nav-link {
+    display: block;
+    padding: .5rem 1rem;
+    color: #f1fff2;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.nav-link:hover {
+    display: block;
+    padding: .5rem 1rem;
+    color: #FF0101;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
 
 .footer-custom{
     position: absolute;
     width: 100%;
+    margin-top: 70px;
     padding-top: 25px;
 }
 
-body {
-    position: relative;
-}
-
-.dropdown-menu .dropdown-menu-dark{
-
-    text-align: end;
+::marker {
+    color: #212529;
 }
 
 .cart-icon{
@@ -28,6 +39,31 @@ body {
     max-width: 600px;
     margin: 0 auto;
 }
+
+.news-custom{
+    background-color: ghostwhite;
+}
+
+.news-custom a:link 
+{ 
+    text-decoration:none;
+    color: black !important; 
+}
+
+.news-custom a:hover
+{
+    color: #FF0101 !important;
+}
+
+.news-custom a:visited
+{
+    color: rgb(104, 104, 104); 
+}
+
+ body
+ {
+     background-color: white;
+ }
 /* ----------------------------------------- tunnel d'achat -------------------------------------------------*/
 
 /* les checkbox dans le tunnel d'achat */

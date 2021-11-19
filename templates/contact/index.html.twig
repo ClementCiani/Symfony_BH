@@ -3,12 +3,15 @@
 {% block title %}Page de contact
 {% endblock %}
 
-{% block body %}
+{% block content %}
 
-	<h1>Contact</h1>
+	<h3>Contact</h3>
+	{% for message in app.flashes('notice') %}
+		<div class="alert alert-success">{{ message }}</div>
+	{% endfor %}
 	{{ form_start(form) }}
 
 	{{ form_widget(form)}}
-	<button class="btn btn-dark" type="submit">Envoyer</button>
+	<button class="btn btn-lg btn-dark" type="submit">Envoyer</button>
 	{{ form_end(form) }}
 {% endblock %}

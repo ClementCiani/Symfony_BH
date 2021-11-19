@@ -3,14 +3,12 @@
 {% block title %}News
 {% endblock %}
 
-{% block body %}
-	<h1>News</h1>
-
+{% block content %}
 	<table class="table">
 		<tbody>
 
 			<tr>
-				<h2>{{ news.title }}</h2>
+				<h3>{{ news.title }}</h3>
 			</tr>
 			<tr>
 				<td>{{ news.content | raw }}</td>

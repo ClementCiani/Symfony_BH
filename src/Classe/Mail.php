@@ -7,9 +7,9 @@ use Mailjet\Resources;
 
 class Mail
 {
-    private $api_key = 'f14b38dc709b8a42ccd06c6affcf749a';
+    protected $api_key = 'f14b38dc709b8a42ccd06c6affcf749a';
 
-    private $api_secret_key = '527221163e655d2f63db3a3a04e6e5ee';
+    protected $api_secret_key = '7991475f1a8cdf6f0105a7f3b89660dc';
 
     public function send($to_email, $to_name, $subject, $content)
     {
@@ -19,7 +19,7 @@ class Mail
                 [
                     'From' => [
                         'Email' => "kless@live.fr",
-                        'Name' => "Banlieue'\s Heart"
+                        'Name' => "Banlieue's Heart"
                     ],
                     'To' => [
                         [
